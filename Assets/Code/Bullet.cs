@@ -6,8 +6,7 @@ public class Bullet : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        StartCoroutine(KillMe());
-        Plane plane = new Plane(Vector3.up, 0);
+        var plane = new Plane(Vector3.up, 0);
 
         float dist;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -18,17 +17,9 @@ public class Bullet : MonoBehaviour {
             dir.Normalize();
             GetComponent<Rigidbody>().velocity = dir * 20;
         }
+        Destroy(this.gameObject, 2);
     }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-    private IEnumerator KillMe()
-    {
-        yield return new WaitForSeconds(2);
-        Destroy(this.gameObject);
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.name == "Capsule")

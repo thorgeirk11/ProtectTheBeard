@@ -13,7 +13,6 @@ public class PlayerController : Entity
     Rigidbody body;
     Renderer rend;
     Color normalColor;
-    bool timestopped = false;
     private float minZ = -6, maxZ = 20;
     private float minX = -20, maxX = 0;
     readonly Dictionary<KeyCode[], Vector3> Directions = new Dictionary<KeyCode[], Vector3>
@@ -36,12 +35,8 @@ public class PlayerController : Entity
     // Update is called once per frame
     void Update()
     {
-        if (!timestopped)
+        if (!GameController.Instance.timestopped)
         {
-            Vector3 pos = transform.position;
-            pos.z = Mathf.Clamp(transform.position.z, minZ, maxZ);
-            pos.x = Mathf.Clamp(transform.position.x, minX, maxX);
-            transform.position = pos;
             HandleMovement();
 
             if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -68,7 +63,7 @@ public class PlayerController : Entity
                 }
                 foreach (GameObject dest in GameObject.FindGameObjectsWithTag("Obstacle"))
                 {
-                    Destroy(dest);
+                    //Destroy(dest);
                 }
             }   
         }
@@ -100,14 +95,8 @@ public class PlayerController : Entity
     }
     private void StopTime()
     {
-        if(timestopped)
-        {
-            Time.timeScale = 1;
-        }else
-        {
-            Time.timeScale = 0;
-        }
-        timestopped = !timestopped;
+
+        GameController.Instance.stopTime();
     }
     internal void Damage()
     {

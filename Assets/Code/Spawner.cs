@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spawner : MonoBehaviour {
-
+public class Spawner : MonoBehaviour
+{
     private bool canSpawn = true;
     public int maxSpawns;
     private int currentSpawns = 0;
@@ -11,7 +11,8 @@ public class Spawner : MonoBehaviour {
     private int highHP = 2;
     public Enemy enemyToSpawn;
 
-    void Update () {
+    void Update()
+    {
         if (currentSpawns < maxSpawns)
         {
             if (canSpawn)
@@ -20,7 +21,7 @@ public class Spawner : MonoBehaviour {
                 StartCoroutine(Spawn());
             }
         }
-	}
+    }
 
     private IEnumerator Spawn()
     {
@@ -34,8 +35,8 @@ public class Spawner : MonoBehaviour {
         currentSpawns++;
         var enemy = Instantiate(enemyToSpawn);
         enemy.transform.position = this.transform.position;
-        enemy.Setup(Random.Range(1, Mathf.Min(highHP,6)));
-        var color = enemy.GetComponentInChildren<Renderer>().material.color; 
+        enemy.Setup(Random.Range(1, Mathf.Min(highHP, 6)));
+        var color = enemy.GetComponentInChildren<Renderer>().material.color;
         Debug.Log(highHP);
         switch (enemy.HP)
         {
@@ -56,6 +57,6 @@ public class Spawner : MonoBehaviour {
         maxSpawns = howmany;
         highHP = highestHP + 1;
         spawnRate = Random.Range(0.5f, 2f);
-        
+
     }
 }

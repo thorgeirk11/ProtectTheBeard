@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,30 +9,30 @@ public class GameController : MonoBehaviour
 {
     public static GameController Instance { get; private set; }
     public static bool GameOver { get; internal set; }
-
+    public bool timestopped { get; private set; }
     public PlayerController Player;
     public int MaxLifes;
-    private GameObject[] hiddens;
+    public IEnumerable<Transform> FirstCheckPoints { get; private set; }
+    public Transform WizzardTransform { get; internal set; }
+
     private LifeUI lifes;
-    public GameObject[] spawners;
+    public Spawner[] spawners;
+    public GameObject pauseScreen;
 
     // Use this for initialization
     void Awake()
     {
         Instance = this;
-        lifes = GetComponentInChildren<LifeUI>();
+        FirstCheckPoints = GameObject.FindGameObjectsWithTag("CheckPoint").Select(i => i.transform);
+        WizzardTransform = GameObject.FindGameObjectWithTag("Wizzard").transform;
+        lifes = FindObjectOfType<LifeUI>();
         GameOver = false;
     }
 
     void Start()
     {
-        hiddens = GameObject.FindGameObjectsWithTag("Hidden");
         lifes.SetMaxLifes(MaxLifes);
         StartCoroutine(spawnWaves());
-    }
-    public GameObject[] getHiddens()
-    {
-        return hiddens;
     }
     internal void PlayerGotHit()
     {
@@ -49,11 +50,35 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(2);
         for (int i = 1; ; i++)
         {
-            foreach (GameObject item in spawners)
+            foreach (Spawner spawner in spawners)
             {
-                item.GetComponent<Spawner>().startNewWave(i,i/2);
+                spawner.startNewWave(1 + i / 2, i / 3);
             }
             yield return new WaitForSeconds(10);
         }
+    }
+
+    public void stopTime()
+    {
+        if (timestopped)
+        {
+            pauseScreen.SetActive(false);
+            Time.timeScale = 1;
+        }
+        else
+        {
+            pauseScreen.SetActive(true);
+            Time.timeScale = 0;
+        }
+        timestopped = !timestopped;
+    }
+    public void QuitGame()
+    {
+        Debug.Log("I SHOULD BE QUITTING RABBLE RABBLE");
+        Application.Quit();
+    }
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(0);
     }
 }

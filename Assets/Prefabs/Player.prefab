@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 23370617162914946}
   - component: {fileID: 114904193578641826}
   - component: {fileID: 54334821599045602}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1411653729684074}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 1.94, y: 0.5, z: -2.94}
+  m_LocalPosition: {x: -1, y: 0.5, z: -2.94}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -74,6 +74,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!33 &33606932041366878
 MeshFilter:
@@ -120,6 +121,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70151cd3b0ebf0948a6a8455fbbc51e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 56.5
-  ObisticlePrefab: {fileID: 1861960307950936, guid: ae23c1e5cec2a7540af8f3c43285e58e,
+  speed: 54
+  bulletPrefab: {fileID: 1861960307950936, guid: ae23c1e5cec2a7540af8f3c43285e58e,
+    type: 2}
+  obstaclePrefab: {fileID: 1874376683456756, guid: 7a44aca92f0f7af42a922fd0067d031a,
     type: 2}

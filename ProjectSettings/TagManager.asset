@@ -6,8 +6,10 @@ TagManager:
   tags:
   - Enemy
   - Obstacle
-  - Hidden
   - Spawner
+  - PauseScreen
+  - CheckPoint
+  - Wizzard
   layers:
   - Default
   - TransparentFX
@@ -17,8 +19,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - OuterWall
+  - Player
   - 
   - 
   - 

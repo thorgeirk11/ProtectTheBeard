@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class Enemy : Entity
 {
-    public Transform Target;
     public float attackRate = 3f;
     public int HP { get; private set; }
+    public bool ReachedEnterance { get; private set; }
+
     public Slider healthBar;
 
     private PlayerController player;
-    private bool canAttack = true;
+    private float lastAttack;
     private NavMeshAgent agent;
 
     // Use this for initialization
@@ -27,20 +29,28 @@ public class Enemy : Entity
     void Update()
     {
         if (GameController.GameOver) return;
-        getClosestTarget();
-        if (canAttack)
+        var target = GameController.Instance.WizzardTransform;
+        if (!ReachedEnterance)
         {
-            if (!agent.pathPending)
+            target = getClosestCheckPoint();
+        }
+        agent.SetDestination(target.position);
+        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+        {
+            if (target.tag == "CheckPoint")
             {
-                if (agent.remainingDistance <= agent.stoppingDistance)
+                ReachedEnterance = true;
+            }
+            else if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+            {
+                if (lastAttack < Time.time)
                 {
-                    if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
-                    {
-                        StartCoroutine(AttackPlayer());
-                    }
+                    lastAttack = Time.time + attackRate;
+                    player.Damage();
                 }
             }
         }
+
         healthBar.value = iTween.FloatUpdate(healthBar.value, HP, 2);
     }
 
@@ -61,26 +71,19 @@ public class Enemy : Entity
         }
     }
 
-    private void getClosestTarget()
+    private Transform getClosestCheckPoint()
     {
-        float minDistance = float.MaxValue;
-        foreach (var item in GameController.Instance.getHiddens())
+        var minDistance = float.MaxValue;
+        var target = transform;
+        foreach (var i in GameController.Instance.FirstCheckPoints)
         {
-            float tmpDist = Vector3.Distance(item.transform.position, this.gameObject.transform.position);
+            var tmpDist = Vector3.Distance(i.position, transform.position);
             if (minDistance > tmpDist)
             {
-                Target = item.transform;
+                target = i;
                 minDistance = tmpDist;
             }
-
         }
-        agent.SetDestination(Target.position);
-    }
-    private IEnumerator AttackPlayer()
-    {
-        canAttack = false;
-        player.Damage();
-        yield return new WaitForSeconds(attackRate);
-        canAttack = true;
+        return target;
     }
 }
