@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 4db1431d4cada4f4fb70c1b3c7d3272d
+timeCreated: 1490105514
+licenseType: Pro
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 80
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: ZAPPAT
+  fontNames:
+  - ZAPPAT
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
