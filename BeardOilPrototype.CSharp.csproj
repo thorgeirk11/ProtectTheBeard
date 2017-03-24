@@ -86,20 +86,28 @@
   <ItemGroup>
     <Compile Include="Assets\Code\Bullet.cs" />
     <Compile Include="Assets\Code\Enemy.cs" />
+    <Compile Include="Assets\Code\EnemyData.cs" />
     <Compile Include="Assets\Code\Entity.cs" />
     <Compile Include="Assets\Code\Follow.cs" />
     <Compile Include="Assets\Code\GameController.cs" />
     <Compile Include="Assets\Code\LifeUI.cs" />
-    <Compile Include="Assets\Code\MainMenu.cs" />
+    <Compile Include="Assets\Code\PauseMenu.cs" />
     <Compile Include="Assets\Code\PlayerController.cs" />
     <Compile Include="Assets\Code\Sound\AudioEmitter.cs" />
     <Compile Include="Assets\Code\Sound\SoundManager.cs" />
     <Compile Include="Assets\Code\Spawner.cs" />
+    <Compile Include="Assets\Code\UI\ActionBarButton.cs" />
+    <Compile Include="Assets\Code\UI\BeardOilBar.cs" />
+    <Compile Include="Assets\Code\UI\MainMenu.cs" />
     <Compile Include="Assets\Code\Utils\iTween.cs" />
+    <Compile Include="Assets\Code\Wave.cs" />
+    <Compile Include="Assets\Code\WaveHandle.cs" />
     <Compile Include="Assets\FaceCamera.cs" />
     <Compile Include="Assets\FollowCamera.cs" />
+    <Compile Include="Assets\Obstacle.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Hand painted bottle\readme.txt" />
     <None Include="Assets\Sprites\UI-Grayscale.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />

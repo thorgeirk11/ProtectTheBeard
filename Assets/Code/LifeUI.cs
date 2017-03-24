@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class LifeUI : MonoBehaviour
 {
-
     private int MaxLifes = 10;
     private Slider lifeBar;
 

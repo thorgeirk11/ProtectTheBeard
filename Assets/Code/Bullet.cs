@@ -28,10 +28,10 @@ public class Bullet : MonoBehaviour {
             enm.gotHit();
             Destroy(this.gameObject);
         }
-        if(other.name == "Cube")
+        /*if(other.name == "Cube")
         {
             Destroy(other.gameObject.transform.parent.gameObject);
             Destroy(this.gameObject);
-        }
+        }*/
     }
 }

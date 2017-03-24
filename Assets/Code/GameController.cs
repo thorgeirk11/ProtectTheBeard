@@ -9,15 +9,18 @@ public class GameController : MonoBehaviour
 {
     public static GameController Instance { get; private set; }
     public static bool GameOver { get; internal set; }
-    public bool timestopped { get; private set; }
+    public bool timestopped { get; set; }
     public PlayerController Player;
     public int MaxLifes;
     public IEnumerable<Transform> FirstCheckPoints { get; private set; }
     public Transform WizzardTransform { get; internal set; }
-
-    private LifeUI lifes;
+    public float OilBarFillRate;
     public Spawner[] spawners;
-    public GameObject pauseScreen;
+
+    private int waveNr;
+    private WaveHandle allWaves;
+    private int maxWaves;
+    private LifeUI lifes;
 
     // Use this for initialization
     void Awake()
@@ -27,12 +30,16 @@ public class GameController : MonoBehaviour
         WizzardTransform = GameObject.FindGameObjectWithTag("Wizzard").transform;
         lifes = FindObjectOfType<LifeUI>();
         GameOver = false;
+        String json = WaveHandle.LoadResourceTextfile("waveHandler.json");
+        Debug.Log(json);
+        allWaves = JsonUtility.FromJson<WaveHandle>(json);
+        maxWaves = allWaves.waves.Length;
     }
 
     void Start()
     {
+        StartCoroutine(checkForWaveDone());
         lifes.SetMaxLifes(MaxLifes);
-        StartCoroutine(spawnWaves());
     }
     internal void PlayerGotHit()
     {
@@ -45,40 +52,70 @@ public class GameController : MonoBehaviour
             SceneManager.LoadScene(scene, LoadSceneMode.Single);
         }
     }
-    private IEnumerator spawnWaves()
+
+    private IEnumerator checkForWaveDone()
     {
-        yield return new WaitForSeconds(2);
-        for (int i = 1; ; i++)
+        while (true)
         {
-            foreach (Spawner spawner in spawners)
+            yield return new WaitForSeconds(1f);
+            bool check = true;
+            foreach (var item in spawners)
             {
-                spawner.startNewWave(1 + i / 2, i / 3);
+                check &= item.amDone();
+                if (!check) break;
             }
-            yield return new WaitForSeconds(10);
+            if (check)
+            {
+                while (FindObjectsOfType<Enemy>().Any())
+                {
+                    yield return new WaitForSeconds(1f);
+                }
+                spawnWave();
+            }
         }
     }
+    private void spawnWave()
+    {
+        List<EnemyData> enemies = splitUp(allWaves.waves[waveNr].enemies);
+        int j = 0;
+        foreach (var item in enemies)
+        {
+            spawners[j].addEnemiesToWave(item);
+            j++;
+            if (spawners.Length == j) j = 0;
+        }
+        foreach (var item in spawners)
+        {
+            item.startNewWave();
+        }
+        waveNr = waveNr >= maxWaves - 1 ? 0 : waveNr + 1;
+    }
+    private List<EnemyData> splitUp(EnemyData[] enemies)
+    {
+        List<EnemyData> arg = new List<EnemyData>();
+        foreach (var item in enemies)
+        {
+            int x = item.amount;
+            while (x > 0)
+            {
+                arg.Add(new EnemyData(item.type, item.hp, 1));
+                x--;
+            }
+        }
+        return arg;
 
+    }
     public void stopTime()
     {
         if (timestopped)
         {
-            pauseScreen.SetActive(false);
             Time.timeScale = 1;
         }
         else
         {
-            pauseScreen.SetActive(true);
             Time.timeScale = 0;
         }
         timestopped = !timestopped;
-    }
-    public void QuitGame()
-    {
-        Debug.Log("I SHOULD BE QUITTING RABBLE RABBLE");
-        Application.Quit();
-    }
-    public void RestartGame()
-    {
-        SceneManager.LoadScene(0);
+        PauseMenu.instance.show();
     }
 }

@@ -54,9 +54,9 @@ public class Enemy : Entity
         healthBar.value = iTween.FloatUpdate(healthBar.value, HP, 2);
     }
 
-    internal void Setup(int hp)
+    internal void Setup(EnemyData enemy)
     {
-        HP = hp;
+        HP = enemy.hp;
         healthBar.maxValue = HP;
         healthBar.value = HP;
     }

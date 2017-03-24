@@ -45,8 +45,8 @@ public class PlayerController : Entity
             }
             if (Input.GetKeyDown(KeyCode.Mouse1))
             {
-                Plane plane = new Plane(Vector3.up, 0);
-
+                Plane plane = new Plane(Vector3.up, -0.5f);
+                
                 float dist;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (plane.Raycast(ray, out dist))
@@ -95,7 +95,6 @@ public class PlayerController : Entity
     }
     private void StopTime()
     {
-
         GameController.Instance.stopTime();
     }
     internal void Damage()

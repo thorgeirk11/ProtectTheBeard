@@ -10,7 +10,16 @@ public class Spawner : MonoBehaviour
     public float spawnRate = 0.5f;
     private int highHP = 2;
     public Enemy enemyToSpawn;
+    public List<EnemyData> enemyList;
 
+    private void Awake()
+    {
+        makeNewList();
+    }
+    private void makeNewList()
+    {
+        enemyList = new List<EnemyData>();
+    }
     void Update()
     {
         if (currentSpawns < maxSpawns)
@@ -35,9 +44,10 @@ public class Spawner : MonoBehaviour
         currentSpawns++;
         var enemy = Instantiate(enemyToSpawn);
         enemy.transform.position = this.transform.position;
-        enemy.Setup(Random.Range(1, Mathf.Min(highHP, 6)));
+        EnemyData enemyData = enemyList[0];
+        enemyList.RemoveAt(0);
+        enemy.Setup(enemyData);
         var color = enemy.GetComponentInChildren<Renderer>().material.color;
-        Debug.Log(highHP);
         switch (enemy.HP)
         {
             case 2: color = Color.black; break;
@@ -51,12 +61,18 @@ public class Spawner : MonoBehaviour
     {
         currentSpawns = 0;
     }
-    public void startNewWave(int howmany, int highestHP)
+    public void addEnemiesToWave(EnemyData enemy)
+    {
+        enemyList.Add(enemy);
+    }
+    public void startNewWave()
     {
         currentSpawns = 0;
-        maxSpawns = howmany;
-        highHP = highestHP + 1;
+        maxSpawns = enemyList.Count;
         spawnRate = Random.Range(0.5f, 2f);
-
+    }
+    public bool amDone()
+    {
+        return maxSpawns == currentSpawns;
     }
 }

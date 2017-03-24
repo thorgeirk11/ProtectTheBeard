@@ -1,0 +1,25 @@
+{ "waves" : [
+	{"wavenr":1 ,"enemies":
+		[ {"type": 1, "hp" : 1, "amount": 3 }]
+	},
+	{"wavenr":2 ,"enemies":
+		[ {"type": 1, "hp" : 1, "amount": 6 }]
+	},
+	{"wavenr":3 ,"enemies":
+		[ {"type": 1, "hp" : 1, "amount": 12 }]
+	},
+	{"wavenr":4 ,"enemies":
+		[ {"type": 2, "hp" : 2, "amount": 3 }]
+	},
+	{"wavenr":5 ,"enemies":
+		[ {"type": 2, "hp" : 2, "amount": 3 },
+		  {"type": 1, "hp" : 1, "amount": 3 }
+		]
+	},
+	{"wavenr":6 ,"enemies":
+		[ {"type": 2, "hp" : 2, "amount": 6 },
+		  {"type": 2, "hp" : 1, "amount": 3 }
+		]
+	}
+		
+]}
