@@ -13,7 +13,7 @@ public class Enemy : Entity
     public bool ReachedEnterance { get; private set; }
 
     public Slider healthBar;
-
+    private Transform capsule;
     private PlayerController player;
     private float lastAttack;
     private NavMeshAgent agent;
@@ -25,16 +25,18 @@ public class Enemy : Entity
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        player = GameController.Instance.Player;
         beardBalls = 0;
         stopped = false;
         beardparts = new List<Transform>();
         foreach (Transform item in transform)
         {
+            if(item.name == "Capsule")
+            {
+                capsule = item;
+            }
             if(item.name == "Beard")
             {
                 beard = item;
-                break;
             }
         }
         if(beard != null)
@@ -109,6 +111,7 @@ public class Enemy : Entity
     private IEnumerator GoAway()
     {
         stopped = true;
+        capsule.gameObject.GetComponent<Collider>().enabled = false;
         yield return new WaitForSeconds(2f);
         Destroy(this.gameObject);
     }

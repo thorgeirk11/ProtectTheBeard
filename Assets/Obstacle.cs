@@ -5,20 +5,15 @@ using UnityEngine;
 public class Obstacle : MonoBehaviour {
 
     // Use this for initialization
-    private float howLong;
+    [Range(3,10)]
+    public float Duration;
 	void Start () {
-        howLong = 3f;
         StartCoroutine(DestroyMe());
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 
     private IEnumerator DestroyMe()
     {
-        yield return new WaitForSeconds(howLong);
+        yield return new WaitForSeconds(Duration);
         Destroy(this.gameObject);
     }
 }

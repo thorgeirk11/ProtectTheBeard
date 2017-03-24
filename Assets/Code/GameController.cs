@@ -10,7 +10,6 @@ public class GameController : MonoBehaviour
     public static GameController Instance { get; private set; }
     public static bool GameOver { get; internal set; }
     public bool timestopped { get; set; }
-    public PlayerController Player;
     public int MaxLifes;
     public IEnumerable<Transform> FirstCheckPoints { get; private set; }
     public Transform WizzardTransform { get; internal set; }
@@ -28,7 +27,7 @@ public class GameController : MonoBehaviour
         Instance = this;
         FirstCheckPoints = GameObject.FindGameObjectsWithTag("CheckPoint").Select(i => i.transform);
         WizzardTransform = GameObject.FindGameObjectWithTag("Wizzard").transform;
-        lifes = FindObjectOfType<LifeUI>();
+        //lifes = FindObjectOfType<LifeUI>();
         GameOver = false;
         var json = WaveHandle.LoadResourceTextfile("waveHandler.json");
         Debug.Log(json);
@@ -39,7 +38,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         StartCoroutine(checkForWaveDone());
-        lifes.SetMaxLifes(MaxLifes);
+        //lifes.SetMaxLifes(MaxLifes);
     }
     internal void PlayerGotHit()
     {

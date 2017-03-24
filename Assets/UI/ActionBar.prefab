@@ -920,7 +920,7 @@ MonoBehaviour:
   Actions:
   - Type: 0
     Icon: {fileID: 21300000, guid: 9bd960ec0c5a7884e9b48d9690534dbf, type: 3}
-    Cost: 1
+    Cost: 0
   - Type: 1
     Icon: {fileID: 21300000, guid: 78f9e7097600a4f4db4ac1634e8a9492, type: 3}
     Cost: 3

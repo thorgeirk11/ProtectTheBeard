@@ -20,6 +20,33 @@
 		[ {"type": 1, "hp" : 2, "amount": 6 },
 		  {"type": 1, "hp" : 1, "amount": 3 }
 		]
+	},
+	{"wavenr":7 ,"enemies":
+		[ {"type": 1, "hp" : 3, "amount": 3 }]
+	},
+	{"wavenr":8 ,"enemies":
+		[ {"type": 1, "hp" : 3, "amount": 3 },
+		  {"type": 1, "hp" : 2, "amount": 3 },
+		  {"type": 1, "hp" : 1, "amount": 3 }
+		]
+	},
+	{"wavenr":9 ,"enemies":
+		[ {"type": 1, "hp" : 3, "amount": 6 },
+		  {"type": 1, "hp" : 2, "amount": 3 },
+		  {"type": 1, "hp" : 1, "amount": 3 }
+		]
+	},
+	{"wavenr":10 ,"enemies":
+		[ {"type": 1, "hp" : 7, "amount": 1 },
+		  {"type": 1, "hp" : 6, "amount": 1 },
+		  {"type": 1, "hp" : 5, "amount": 1 }
+		]
+	},
+	{"wavenr":11 ,"enemies":
+		[ {"type": 1, "hp" : 7, "amount": 10 },
+		  {"type": 1, "hp" : 6, "amount": 10 },
+		  {"type": 1, "hp" : 5, "amount": 10 }
+		]
 	}
 		
 ]}

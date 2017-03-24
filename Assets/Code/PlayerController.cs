@@ -29,7 +29,6 @@ public class PlayerController : Entity
         Actions = GameController.Instance.GetComponent<ActionCotroller>();
         body = GetComponent<Rigidbody>();
         rend = GetComponent<Renderer>();
-        GameController.Instance.Player = this;
         normalColor = rend.material.color;
     }
 
