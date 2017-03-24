@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        var plane = new Plane(Vector3.up, 0);
+        var plane = new Plane(Vector3.up, -0.5f);
 
         float dist;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

@@ -8,8 +8,8 @@ public class PlayerController : Entity
 {
     [Range(1, 100)]
     public float speed;
-    public GameObject bulletPrefab;
-    public GameObject obstaclePrefab;
+
+    ActionCotroller Actions;
     Rigidbody body;
     Renderer rend;
     Color normalColor;
@@ -26,6 +26,7 @@ public class PlayerController : Entity
     // Use this for initialization
     void Start()
     {
+        Actions = GameController.Instance.GetComponent<ActionCotroller>();
         body = GetComponent<Rigidbody>();
         rend = GetComponent<Renderer>();
         GameController.Instance.Player = this;
@@ -41,19 +42,11 @@ public class PlayerController : Entity
 
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                Instantiate(bulletPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
+                Actions.PerformAction(ActionKey.LeftMouse);
             }
             if (Input.GetKeyDown(KeyCode.Mouse1))
             {
-                Plane plane = new Plane(Vector3.up, -0.5f);
-                
-                float dist;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (plane.Raycast(ray, out dist))
-                {
-                    Vector3 point = ray.GetPoint(dist);
-                    Instantiate(obstaclePrefab, point, transform.rotation);
-                }
+                Actions.PerformAction(ActionKey.RightMouse);
             }
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
@@ -65,7 +58,7 @@ public class PlayerController : Entity
                 {
                     //Destroy(dest);
                 }
-            }   
+            }
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {

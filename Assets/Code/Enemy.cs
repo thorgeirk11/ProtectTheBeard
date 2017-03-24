@@ -17,17 +17,41 @@ public class Enemy : Entity
     private PlayerController player;
     private float lastAttack;
     private NavMeshAgent agent;
-
+    private int beardBalls;
+    private Transform beard;
+    private List<Transform> beardparts;
+    private bool stopped { get; set; }
     // Use this for initialization
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameController.Instance.Player;
+        beardBalls = 0;
+        stopped = false;
+        beardparts = new List<Transform>();
+        foreach (Transform item in transform)
+        {
+            if(item.name == "Beard")
+            {
+                beard = item;
+                break;
+            }
+        }
+        if(beard != null)
+        {
+            foreach (Transform item in beard)
+            {
+                item.gameObject.SetActive(false);
+                beardparts.Add(item);
+                
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (stopped) gameObject.GetComponent<NavMeshAgent>().speed = 0;
         if (GameController.GameOver) return;
         var target = GameController.Instance.WizzardTransform;
         if (!ReachedEnterance)
@@ -60,17 +84,34 @@ public class Enemy : Entity
         healthBar.maxValue = HP;
         healthBar.value = HP;
     }
-
+    private void RemoveBeard()
+    {
+        foreach (Transform item in beardparts)
+        {
+            if (!item.gameObject.activeInHierarchy)
+            {
+                item.gameObject.SetActive(true);
+                break;
+            }
+        }
+    }
     public void gotHit()
     {
         HP--;
+        RemoveBeard();
         healthBar.value = HP;
         if (HP <= 0)
         {
-            Destroy(this.gameObject);
+            //Do something other than destroy it
+            StartCoroutine(GoAway());
         }
     }
-
+    private IEnumerator GoAway()
+    {
+        stopped = true;
+        yield return new WaitForSeconds(2f);
+        Destroy(this.gameObject);
+    }
     private Transform getClosestCheckPoint()
     {
         var minDistance = float.MaxValue;

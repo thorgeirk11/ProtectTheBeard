@@ -9,7 +9,7 @@ public class Spawner : MonoBehaviour
     private int currentSpawns = 0;
     public float spawnRate = 0.5f;
     private int highHP = 2;
-    public Enemy enemyToSpawn;
+    private Enemy enemyToSpawn;
     public List<EnemyData> enemyList;
 
     private void Awake()
@@ -41,10 +41,19 @@ public class Spawner : MonoBehaviour
 
     private void SpawnObject()
     {
+        EnemyData enemyData = enemyList[0];
+        switch (enemyData.type)
+        {
+            case 1:
+                GameObject tmp = Resources.Load("Prefabs/Bearded Enemy") as GameObject;
+                enemyToSpawn = tmp.GetComponent<Enemy>();
+                break;
+            default:
+                break;
+        }
         currentSpawns++;
         var enemy = Instantiate(enemyToSpawn);
         enemy.transform.position = this.transform.position;
-        EnemyData enemyData = enemyList[0];
         enemyList.RemoveAt(0);
         enemy.Setup(enemyData);
         var color = enemy.GetComponentInChildren<Renderer>().material.color;

@@ -12,8 +12,8 @@ public class BeardOilBar : MonoBehaviour
     private Slider OilBar;
     private Slider OverlayBar;
     private Text AmountText;
-    
-    public float OilAmount { get; private set; }
+
+    public static float OilAmount { get; private set; }
 
     public void UseOil(int amount)
     {

@@ -30,7 +30,7 @@ public class GameController : MonoBehaviour
         WizzardTransform = GameObject.FindGameObjectWithTag("Wizzard").transform;
         lifes = FindObjectOfType<LifeUI>();
         GameOver = false;
-        String json = WaveHandle.LoadResourceTextfile("waveHandler.json");
+        var json = WaveHandle.LoadResourceTextfile("waveHandler.json");
         Debug.Log(json);
         allWaves = JsonUtility.FromJson<WaveHandle>(json);
         maxWaves = allWaves.waves.Length;
