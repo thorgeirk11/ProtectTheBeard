@@ -57,7 +57,7 @@ class ActionCotroller : MonoBehaviour
         if (plane.Raycast(ray, out dist))
         {
             Vector3 point = ray.GetPoint(dist);
-            Instantiate(oilPrefab, point, Quaternion.identity);aa
+            Instantiate(oilPrefab, point, Quaternion.identity);
         }
     }
     public void CastGrowBeard()

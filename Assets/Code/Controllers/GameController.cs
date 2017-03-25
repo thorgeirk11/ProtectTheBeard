@@ -16,6 +16,8 @@ public class GameController : MonoBehaviour
     public float OilBarFillRate;
     public Spawner[] spawners;
 
+    public List<Transform> StolenWizzardBeardParts;
+
     private int waveNr;
     private WaveHandle allWaves;
     private int maxWaves;
@@ -36,7 +38,7 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(checkForWaveDone());
+        StartCoroutine(CheckForWaveDone());
     }
     internal void PlayerGotHit()
     {
@@ -50,7 +52,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private IEnumerator checkForWaveDone()
+    private IEnumerator CheckForWaveDone()
     {
         while (true)
         {
@@ -67,11 +69,11 @@ public class GameController : MonoBehaviour
                 {
                     yield return new WaitForSeconds(1f);
                 }
-                spawnWave();
+                SpawnWave();
             }
         }
     }
-    private void spawnWave()
+    private void SpawnWave()
     {
         var enemies = splitUp(allWaves.waves[waveNr].enemies);
         var j = 0;

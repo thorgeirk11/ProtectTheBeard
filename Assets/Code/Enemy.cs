@@ -30,22 +30,22 @@ public class Enemy : Entity
         beardparts = new List<Transform>();
         foreach (Transform item in transform)
         {
-            if(item.name == "Capsule")
+            if (item.name == "Capsule")
             {
                 capsule = item;
             }
-            if(item.name == "Beard")
+            if (item.name == "Beard")
             {
                 beard = item;
             }
         }
-        if(beard != null)
+        if (beard != null)
         {
             foreach (Transform item in beard)
             {
                 item.gameObject.SetActive(false);
                 beardparts.Add(item);
-                
+
             }
         }
         speed = gameObject.GetComponent<NavMeshAgent>().speed;
@@ -55,18 +55,19 @@ public class Enemy : Entity
     void Update()
     {
         if (stopped) gameObject.GetComponent<NavMeshAgent>().speed = 0;
+
         if (GameController.GameOver) return;
-        var target = GameController.Instance.WizzardTransform;
-        if (!ReachedEnterance)
-        {
-            target = getClosestCheckPoint();
-        }
+        var target = SelectTarget();
         agent.SetDestination(target.position);
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
             if (target.tag == "CheckPoint")
             {
                 ReachedEnterance = true;
+            }
+            else if (target.tag == "WizzardsBeard")
+            {
+                PickupWizzardsBeard(target);
             }
             else if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
             {
@@ -79,6 +80,25 @@ public class Enemy : Entity
         }
 
         healthBar.value = iTween.FloatUpdate(healthBar.value, HP, 2);
+    }
+
+    private void PickupWizzardsBeard(Transform target)
+    {
+        throw new NotImplementedException();
+    }
+
+    private Transform SelectTarget()
+    {
+        var target = GameController.Instance.WizzardTransform;
+        if (GameController.Instance.StolenWizzardBeardParts.Any(i => i.parent.GetComponent<Enemy>() == null))
+        {
+            target = GetCloest(GameController.Instance.StolenWizzardBeardParts);
+        }
+        else if (!ReachedEnterance)
+        {
+            target = GetCloest(GameController.Instance.FirstCheckPoints);
+        }
+        return target;
     }
 
     internal void Setup(EnemyData enemy)
@@ -120,11 +140,11 @@ public class Enemy : Entity
     {
         gameObject.GetComponent<NavMeshAgent>().speed = speed;
     }
-    private Transform getClosestCheckPoint()
+    private Transform GetCloest(IEnumerable<Transform> tranforms)
     {
         var minDistance = float.MaxValue;
         var target = transform;
-        foreach (var i in GameController.Instance.FirstCheckPoints)
+        foreach (var i in tranforms)
         {
             var tmpDist = Vector3.Distance(i.position, transform.position);
             if (minDistance > tmpDist)
