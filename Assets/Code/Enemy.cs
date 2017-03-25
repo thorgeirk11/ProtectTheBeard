@@ -11,7 +11,7 @@ public class Enemy : Entity
     public float attackRate = 3f;
     public int HP { get; private set; }
     public bool ReachedEnterance { get; private set; }
-
+    public float speed;
     public Slider healthBar;
     private Transform capsule;
     private PlayerController player;
@@ -48,6 +48,7 @@ public class Enemy : Entity
                 
             }
         }
+        speed = gameObject.GetComponent<NavMeshAgent>().speed;
     }
 
     // Update is called once per frame
@@ -86,7 +87,7 @@ public class Enemy : Entity
         healthBar.maxValue = HP;
         healthBar.value = HP;
     }
-    private void RemoveBeard()
+    private void AddBeard()
     {
         foreach (Transform item in beardparts)
         {
@@ -100,7 +101,7 @@ public class Enemy : Entity
     public void gotHit()
     {
         HP--;
-        RemoveBeard();
+        AddBeard();
         healthBar.value = HP;
         if (HP <= 0)
         {
@@ -114,6 +115,10 @@ public class Enemy : Entity
         capsule.gameObject.GetComponent<Collider>().enabled = false;
         yield return new WaitForSeconds(2f);
         Destroy(this.gameObject);
+    }
+    public void restoreSpeed()
+    {
+        gameObject.GetComponent<NavMeshAgent>().speed = speed;
     }
     private Transform getClosestCheckPoint()
     {

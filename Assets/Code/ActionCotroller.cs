@@ -8,11 +8,11 @@ class ActionCotroller : MonoBehaviour
 {
     public GameObject bulletPrefab;
     public GameObject obstaclePrefab;
+    public GameObject oilPrefab;
 
     private PlayerController player;
     private ActionBar actionBar;
     private BeardOilBar oilBar;
-
     public void Start()
     {
         player = FindObjectOfType<PlayerController>();
@@ -36,7 +36,7 @@ class ActionCotroller : MonoBehaviour
                 CastGrowBeard();
                 break;
             case ActionType.ThrowOil:
-                print("Throw Oil Is not implemented Yet!");
+                CastOilSpill();
                 break;
             case ActionType.RestoreBeard:
                 print("RestoreBeard Is not implemented Yet!");
@@ -49,7 +49,17 @@ class ActionCotroller : MonoBehaviour
         }
     }
 
-
+    public void CastOilSpill()
+    {
+        Plane plane = new Plane(Vector3.up, -0.5f);
+        float dist;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (plane.Raycast(ray, out dist))
+        {
+            Vector3 point = ray.GetPoint(dist);
+            Instantiate(oilPrefab, point, Quaternion.identity);aa
+        }
+    }
     public void CastGrowBeard()
     {
         var pos = player.transform.position;
@@ -59,7 +69,6 @@ class ActionCotroller : MonoBehaviour
     public void CastObstacle()
     {
         Plane plane = new Plane(Vector3.up, -0.5f);
-
         float dist;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (plane.Raycast(ray, out dist))

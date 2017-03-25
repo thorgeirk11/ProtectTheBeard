@@ -27,7 +27,6 @@ public class GameController : MonoBehaviour
         Instance = this;
         FirstCheckPoints = GameObject.FindGameObjectsWithTag("CheckPoint").Select(i => i.transform);
         WizzardTransform = GameObject.FindGameObjectWithTag("Wizzard").transform;
-        //lifes = FindObjectOfType<LifeUI>();
         GameOver = false;
         var json = WaveHandle.LoadResourceTextfile("waveHandler.json");
         Debug.Log(json);
@@ -38,7 +37,6 @@ public class GameController : MonoBehaviour
     void Start()
     {
         StartCoroutine(checkForWaveDone());
-        //lifes.SetMaxLifes(MaxLifes);
     }
     internal void PlayerGotHit()
     {
@@ -75,8 +73,8 @@ public class GameController : MonoBehaviour
     }
     private void spawnWave()
     {
-        List<EnemyData> enemies = splitUp(allWaves.waves[waveNr].enemies);
-        int j = 0;
+        var enemies = splitUp(allWaves.waves[waveNr].enemies);
+        var j = 0;
         foreach (var item in enemies)
         {
             spawners[j].addEnemiesToWave(item);
@@ -91,10 +89,10 @@ public class GameController : MonoBehaviour
     }
     private List<EnemyData> splitUp(EnemyData[] enemies)
     {
-        List<EnemyData> arg = new List<EnemyData>();
+        var arg = new List<EnemyData>();
         foreach (var item in enemies)
         {
-            int x = item.amount;
+            var x = item.amount;
             while (x > 0)
             {
                 arg.Add(new EnemyData(item.type, item.hp, 1));

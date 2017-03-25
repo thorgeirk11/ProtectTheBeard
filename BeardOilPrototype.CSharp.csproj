@@ -152,6 +152,7 @@
     <Compile Include="Assets\FaceCamera.cs" />
     <Compile Include="Assets\FollowCamera.cs" />
     <Compile Include="Assets\Obstacle.cs" />
+    <Compile Include="Assets\OilMagic.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\100 Best Effect Pack\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />

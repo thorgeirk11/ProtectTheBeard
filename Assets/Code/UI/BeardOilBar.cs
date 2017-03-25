@@ -9,7 +9,9 @@ public class BeardOilBar : MonoBehaviour
     public int StartValue;
 
     private float FillRate;
+    [SerializeField]
     private Slider OilBar;
+    [SerializeField]
     private Slider OverlayBar;
     private Text AmountText;
 
@@ -27,12 +29,9 @@ public class BeardOilBar : MonoBehaviour
         FillRate = GameController.Instance.OilBarFillRate;
         AmountText = GetComponentInChildren<Text>();
 
-        foreach (var bar in GetComponentsInChildren<Slider>())
-        {
-            bar.value = StartValue;
-            if (bar.wholeNumbers) OilBar = bar;
-            else OverlayBar = bar;
-        }
+        OilBar.value = StartValue;
+        OverlayBar.value = StartValue;
+
         AmountText.text = StartValue.ToString();
     }
 
@@ -41,7 +40,8 @@ public class BeardOilBar : MonoBehaviour
     void Update()
     {
         OilAmount = OverlayBar.value += FillRate * Time.deltaTime;
-        OilBar.value = Mathf.FloorToInt(OverlayBar.value);
-        AmountText.text = OilBar.value.ToString();
+        var target = Mathf.FloorToInt(OverlayBar.value);
+        OilBar.value = iTween.FloatUpdate(OilBar.value, target, 20);
+        AmountText.text = target.ToString();
     }
 }

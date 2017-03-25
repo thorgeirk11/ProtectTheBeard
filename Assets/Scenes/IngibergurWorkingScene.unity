@@ -3473,6 +3473,7 @@ MonoBehaviour:
     type: 2}
   obstaclePrefab: {fileID: 1874376683456756, guid: 7a44aca92f0f7af42a922fd0067d031a,
     type: 2}
+  oilPrefab: {fileID: 1923957386328436, guid: 3e8ecacd35eeb5f4f99efa73747d9484, type: 2}
 --- !u!114 &429525894
 MonoBehaviour:
   m_ObjectHideFlags: 0

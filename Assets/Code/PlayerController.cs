@@ -47,6 +47,10 @@ public class PlayerController : Entity
             {
                 Actions.PerformAction(ActionKey.RightMouse);
             }
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                Actions.PerformAction(ActionKey.Q);
+            }
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
                 foreach (GameObject dest in GameObject.FindGameObjectsWithTag("Enemy"))
