@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.6.0b9</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -129,17 +127,21 @@
     <Compile Include="Assets\100 Best Effect Pack\Standard Assets\Effects\ImageEffects\Scripts\Twirl.cs" />
     <Compile Include="Assets\100 Best Effect Pack\Standard Assets\Effects\ImageEffects\Scripts\VignetteAndChromaticAberration.cs" />
     <Compile Include="Assets\100 Best Effect Pack\Standard Assets\Effects\ImageEffects\Scripts\Vortex.cs" />
-    <Compile Include="Assets\Code\Controllers\BeardController.cs" />
-    <Compile Include="Assets\Code\Controllers\ActionCotroller.cs" />
     <Compile Include="Assets\Code\Bullet.cs" />
+    <Compile Include="Assets\Code\Controllers\ActionCotroller.cs" />
+    <Compile Include="Assets\Code\Controllers\BeardController.cs" />
+    <Compile Include="Assets\Code\Controllers\GameController.cs" />
+    <Compile Include="Assets\Code\Controllers\PlayerController.cs" />
     <Compile Include="Assets\Code\Enemy.cs" />
     <Compile Include="Assets\Code\EnemyData.cs" />
     <Compile Include="Assets\Code\Entity.cs" />
+    <Compile Include="Assets\Code\FaceCamera.cs" />
     <Compile Include="Assets\Code\Follow.cs" />
-    <Compile Include="Assets\Code\Controllers\GameController.cs" />
+    <Compile Include="Assets\Code\FollowCamera.cs" />
     <Compile Include="Assets\Code\LifeUI.cs" />
+    <Compile Include="Assets\Code\Obstacle.cs" />
+    <Compile Include="Assets\Code\OilMagic.cs" />
     <Compile Include="Assets\Code\PauseMenu.cs" />
-    <Compile Include="Assets\Code\Controllers\PlayerController.cs" />
     <Compile Include="Assets\Code\Sound\AudioEmitter.cs" />
     <Compile Include="Assets\Code\Sound\SoundManager.cs" />
     <Compile Include="Assets\Code\Spawner.cs" />
@@ -151,10 +153,6 @@
     <Compile Include="Assets\Code\Utils\iTween.cs" />
     <Compile Include="Assets\Code\Wave.cs" />
     <Compile Include="Assets\Code\WaveHandle.cs" />
-    <Compile Include="Assets\Code\FaceCamera.cs" />
-    <Compile Include="Assets\Code\FollowCamera.cs" />
-    <Compile Include="Assets\Code\Obstacle.cs" />
-    <Compile Include="Assets\Code\OilMagic.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\100 Best Effect Pack\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
@@ -236,6 +234,5 @@
     <None Include="Assets\Hand painted bottle\readme.txt" />
     <None Include="Assets\Sprites\UI-Grayscale.shader" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

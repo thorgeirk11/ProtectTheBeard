@@ -19,10 +19,6 @@ public class BeardController : MonoBehaviour {
         }
         instance = this;
     }
-    void Start () {
-        
-
-	}
 
     public void RemovePartOfBeard(int howMany)
     {
