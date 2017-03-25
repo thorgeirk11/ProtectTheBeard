@@ -52,7 +52,8 @@ public class Spawner : MonoBehaviour
                 break;
         }
         currentSpawns++;
-        var enemy = Instantiate(enemyToSpawn, this.transform.position, Quaternion.identity);
+        var enemy = Instantiate(enemyToSpawn);
+        enemy.transform.position = this.transform.position;
         enemyList.RemoveAt(0);
         enemy.Setup(enemyData);
         var color = enemy.GetComponentInChildren<Renderer>().material.color;

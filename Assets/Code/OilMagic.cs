@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class OilMagic : MonoBehaviour {
-
+public class OilMagic : MonoBehaviour
+{
     // Use this for initialization
     public GameObject MagicEffect;
     public GameObject SwampEffect;
     private List<Enemy> enemiesThatEntered;
     private bool canDestroy = false;
-    void Start () {
+    void Start()
+    {
         enemiesThatEntered = new List<Enemy>();
         StartCoroutine(magicEffect());
-	}
-	
+    }
+
     private IEnumerator magicEffect()
     {
         yield return new WaitForSeconds(1.5f);
@@ -30,17 +31,18 @@ public class OilMagic : MonoBehaviour {
     {
         foreach (var item in enemiesThatEntered)
         {
-            if(item!=null) item.restoreSpeed();
+            if (item != null) item.restoreSpeed();
         }
         Destroy(this.gameObject);
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (!canDestroy) {
+        if (!canDestroy)
+        {
             if (other.name == "Capsule")
             {
                 enemiesThatEntered.Add(other.gameObject.GetComponentInParent<Enemy>());
-                other.gameObject.GetComponentInParent<NavMeshAgent>().speed = other.gameObject.GetComponentInParent<Enemy>().speed / 2;
+                other.gameObject.GetComponentInParent<NavMeshAgent>().speed = other.gameObject.GetComponentInParent<Enemy>().MoveSpeed / 2;
             }
         }
     }
@@ -48,9 +50,9 @@ public class OilMagic : MonoBehaviour {
     {
         if (!canDestroy)
         {
-            if(other.name == "Capsule")
+            if (other.name == "Capsule")
             {
-                other.gameObject.GetComponentInParent<NavMeshAgent>().speed = other.gameObject.GetComponentInParent<Enemy>().speed / 2;
+                other.gameObject.GetComponentInParent<NavMeshAgent>().speed = other.gameObject.GetComponentInParent<Enemy>().MoveSpeed / 2;
             }
         }
     }

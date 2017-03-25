@@ -1,37 +1,53 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class BeardController : MonoBehaviour {
-
-    public GameObject beard;
-    public List<Transform> beardparts;
+public class BeardController : MonoBehaviour
+{
+    public GameObject beardObj;
     public static BeardController instance;
     public bool Dead { get; private set; }
+
+    private Dictionary<Transform, Vector3> defaultLocations;
+    public List<WizzardBeardSphere> WizzardBeard;
+
     // Use this for initialization
     void Awake()
     {
-        beardparts = new List<Transform>();
+        WizzardBeard = new List<WizzardBeardSphere>();
+        defaultLocations = new Dictionary<Transform, Vector3>();
         Dead = false;
-        foreach (Transform item in beard.transform)
+        foreach (Transform item in beardObj.transform)
         {
-            beardparts.Add(item);
+            WizzardBeard.Add(item.GetComponent<WizzardBeardSphere>());
+            defaultLocations[item] = item.position;
         }
         instance = this;
     }
 
-    public void RemovePartOfBeard(int howMany)
+    internal void RestoreBeard(WizzardBeardSphere wizzardBeardSphere)
     {
-        for(int i = beardparts.Count-1; i >= 0; i--)
+        wizzardBeardSphere.transform.SetParent(beardObj.transform);
+        var position = defaultLocations[wizzardBeardSphere.transform];
+        iTween.MoveTo(wizzardBeardSphere.gameObject, position, 2f);
+    }
+
+    public List<WizzardBeardSphere> StealWizzardsBeard(int howMany)
+    {
+        var stolen = new List<WizzardBeardSphere>();
+        for (int i = WizzardBeard.Count - 1; i >= 0; i--)
         {
             if (howMany == 0) break;
-            if (beardparts[i].GetComponent<Renderer>().enabled)
+            if (!WizzardBeard[i].HasBeenPickedUp)
             {
-                beardparts[i].GetComponent<Renderer>().enabled = false;
+                stolen.Add(WizzardBeard[i]);
                 howMany--;
             }
         }
         if (howMany > 0) Dead = true;
+        return stolen;
     }
 
 }

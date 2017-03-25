@@ -153,6 +153,7 @@
     <Compile Include="Assets\Code\Utils\iTween.cs" />
     <Compile Include="Assets\Code\Wave.cs" />
     <Compile Include="Assets\Code\WaveHandle.cs" />
+    <Compile Include="Assets\Code\WizzardBeardSphere.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\100 Best Effect Pack\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />

@@ -15,14 +15,15 @@ public class GameController : MonoBehaviour
     public Transform WizzardTransform { get; internal set; }
     public float OilBarFillRate;
     public Spawner[] spawners;
+    public Transform RunAwayTarget;
 
-    public List<Transform> StolenWizzardBeardParts;
+    //public List<Transform> StolenWizzardBeardParts;
 
     private int waveNr;
     private WaveHandle allWaves;
     private int maxWaves;
     private LifeUI lifes;
-
+    
     // Use this for initialization
     void Awake()
     {
@@ -40,17 +41,7 @@ public class GameController : MonoBehaviour
     {
         StartCoroutine(CheckForWaveDone());
     }
-    internal void PlayerGotHit()
-    {
-        var left = lifes.Lifes - 1;
-        lifes.Lifes--;
-        if (left == 0)
-        {
-            GameOver = true;
-            int scene = SceneManager.GetActiveScene().buildIndex;
-            SceneManager.LoadScene(scene, LoadSceneMode.Single);
-        }
-    }
+
 
     private IEnumerator CheckForWaveDone()
     {

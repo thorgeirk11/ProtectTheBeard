@@ -93,10 +93,4 @@ public class PlayerController : Entity
     {
         GameController.Instance.stopTime();
     }
-    internal void Damage()
-    {
-        GameController.Instance.PlayerGotHit();
-        rend.material.color = Color.red;
-        Wait(.5f, () => rend.material.color = normalColor);
-    }
 }

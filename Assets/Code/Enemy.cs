@@ -8,25 +8,28 @@ using UnityEngine.UI;
 
 public class Enemy : Entity
 {
-    public float attackRate = 3f;
     public int HP { get; private set; }
     public bool ReachedEnterance { get; private set; }
-    public float speed;
-    public Slider healthBar;
+    public bool HasGottenAway { get; private set; }
+    public int MaxHP { get; private set; }
+
+    public float MoveSpeed;
+    //public Slider healthBar;
+
     private Transform capsule;
-    private PlayerController player;
-    private float lastAttack;
     private NavMeshAgent agent;
     private int beardBalls;
     private Transform beard;
     private List<Transform> beardparts;
-    private bool stopped { get; set; }
+    private string path;
+    private List<WizzardBeardSphere> wizzardStolenBeard;
+
     // Use this for initialization
     void Start()
     {
+        wizzardStolenBeard = new List<WizzardBeardSphere>();
         agent = GetComponent<NavMeshAgent>();
         beardBalls = 0;
-        stopped = false;
         beardparts = new List<Transform>();
         foreach (Transform item in transform)
         {
@@ -48,15 +51,15 @@ public class Enemy : Entity
 
             }
         }
-        speed = gameObject.GetComponent<NavMeshAgent>().speed;
+        MoveSpeed = gameObject.GetComponent<NavMeshAgent>().speed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (stopped) gameObject.GetComponent<NavMeshAgent>().speed = 0;
-
         if (GameController.GameOver) return;
+        if (HasGottenAway) return;
+
         var target = SelectTarget();
         agent.SetDestination(target.position);
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
@@ -65,34 +68,91 @@ public class Enemy : Entity
             {
                 ReachedEnterance = true;
             }
-            else if (target.tag == "WizzardsBeard")
+            else if (target.tag == "Wizzard")
             {
-                PickupWizzardsBeard(target);
+                StealWizzardsBeard(target);
             }
-            else if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+            else if (target.tag == "WizzardBeard")
             {
-                if (lastAttack < Time.time)
-                {
-                    lastAttack = Time.time + attackRate;
-                    player.Damage();
-                }
+                PickupWizzardsBeard(target.GetComponent<WizzardBeardSphere>());
+            }
+            else if (target.tag == "RunAwayPoint")
+            {
+                GotAway();
             }
         }
 
-        healthBar.value = iTween.FloatUpdate(healthBar.value, HP, 2);
+        //healthBar.value = iTween.FloatUpdate(healthBar.value, HP, 2);
     }
 
-    private void PickupWizzardsBeard(Transform target)
+    private void GotAway()
     {
-        throw new NotImplementedException();
+        //HasGottenAway = true;
+        gameObject.SetActive(false);
+        //capsule.gameObject.GetComponent<Collider>().enabled = false;
+    }
+
+    public int HowManyBeardSpheresToSteel()
+    {
+        return (from b in beardparts.Take(MaxHP)
+                where !b.gameObject.activeInHierarchy
+                from c in b.transform.Cast<Transform>()
+                where c.GetComponentInChildren<WizzardBeardSphere>() == null
+                select c).Count();
+    }
+
+    private void StealWizzardsBeard(Transform target)
+    {
+        var steelAmount = HowManyBeardSpheresToSteel();
+        var stolenBeard = BeardController.instance.StealWizzardsBeard(steelAmount);
+
+        PlaceStolenBeard(stolenBeard);
+    }
+
+    private void PlaceStolenBeard(List<WizzardBeardSphere> stolenBeard)
+    {
+        var i = 0;
+        var enemyBeard = beardparts
+                            .Where(b => !b.gameObject.activeInHierarchy)
+                            .SelectMany(b => b.transform.Cast<Transform>());
+        foreach (var part in enemyBeard)
+        {
+            PlaceStolenBeard(stolenBeard[i], part);
+            part.parent.gameObject.SetActive(true);
+            i++;
+        }
+    }
+
+    private void PlaceStolenBeard(WizzardBeardSphere beardPart, Transform part)
+    {
+        part.GetComponent<Renderer>().enabled = false;
+        beardPart.transform.SetParent(part);
+        beardPart.HasBeenPickedUp = true;
+        beardPart.IsOnEnemy = true;
+        wizzardStolenBeard.Add(beardPart);
+        iTween.MoveTo(beardPart.gameObject, iTween.Hash("position", Vector3.zero, "islocal", true, "time", 1));
+    }
+
+    private void PickupWizzardsBeard(WizzardBeardSphere target)
+    {
+        if (HP >= 0 && HowManyBeardSpheresToSteel() > 0)
+        {
+            PlaceStolenBeard(new List<WizzardBeardSphere> { target });
+        }
     }
 
     private Transform SelectTarget()
     {
+        print(HowManyBeardSpheresToSteel());
+        if (HP <= 0 || HowManyBeardSpheresToSteel() == 0)
+            return GameController.Instance.RunAwayTarget;
+
         var target = GameController.Instance.WizzardTransform;
-        if (GameController.Instance.StolenWizzardBeardParts.Any(i => i.parent.GetComponent<Enemy>() == null))
+        var wizzardBeardParts = BeardController.instance.WizzardBeard
+                                    .Where(i => i.HasBeenPickedUp && !i.IsOnEnemy);
+        if (wizzardBeardParts.Any())
         {
-            target = GetCloest(GameController.Instance.StolenWizzardBeardParts);
+            target = GetCloest(wizzardBeardParts.Select(i => i.transform));
         }
         else if (!ReachedEnterance)
         {
@@ -104,17 +164,36 @@ public class Enemy : Entity
     internal void Setup(EnemyData enemy)
     {
         HP = enemy.hp;
-        healthBar.maxValue = HP;
-        healthBar.value = HP;
+        MaxHP = enemy.hp;
+        //healthBar.maxValue = HP;
+        //healthBar.value = HP;
+        path = "baddy";
+        path += enemy.hp.ToString();
+        float scaling = enemy.hp * 0.1f;
+        gameObject.transform.localScale += new Vector3(scaling,scaling,scaling);
+        Material mat = Resources.Load("BaddySprites/Materials/" + path) as Material;
+        Transform ix = this.gameObject.transform.GetChild(0);
+        ix.gameObject.GetComponent<Renderer>().material = mat;
     }
     private void AddBeard()
     {
-        foreach (Transform item in beardparts)
+        foreach (Transform part in beardparts)
         {
-            if (!item.gameObject.activeInHierarchy)
+            var stolenParts = part.GetComponentsInChildren<WizzardBeardSphere>();
+            if (stolenParts.Length > 0)
             {
-                item.gameObject.SetActive(true);
-                break;
+                foreach (var stolen in stolenParts)
+                {
+                    stolen.IsOnEnemy = false;
+                    stolen.transform.parent.GetComponent<Renderer>().enabled = true;
+                    stolen.transform.SetParent(null);
+                }
+                return;
+            }
+            if (!part.gameObject.activeInHierarchy)
+            {
+                part.gameObject.SetActive(true);
+                return;
             }
         }
     }
@@ -122,23 +201,19 @@ public class Enemy : Entity
     {
         HP--;
         AddBeard();
-        healthBar.value = HP;
+        //healthBar.value = HP;
         if (HP <= 0)
         {
-            //Do something other than destroy it
-            StartCoroutine(GoAway());
+            Material mat = Resources.Load("BaddySprites/Materials/" + path + "_happy") as Material;
+            Transform ix = this.gameObject.transform.GetChild(0);
+            print(ix);
+            ix.gameObject.GetComponent<Renderer>().material = mat;
+            capsule.gameObject.GetComponent<Collider>().enabled = wizzardStolenBeard.Any();
         }
-    }
-    private IEnumerator GoAway()
-    {
-        stopped = true;
-        capsule.gameObject.GetComponent<Collider>().enabled = false;
-        yield return new WaitForSeconds(2f);
-        Destroy(this.gameObject);
     }
     public void restoreSpeed()
     {
-        gameObject.GetComponent<NavMeshAgent>().speed = speed;
+        gameObject.GetComponent<NavMeshAgent>().speed = MoveSpeed;
     }
     private Transform GetCloest(IEnumerable<Transform> tranforms)
     {
