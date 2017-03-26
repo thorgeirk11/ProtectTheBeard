@@ -14,8 +14,15 @@ public class OilMagic : MonoBehaviour
     {
         enemiesThatEntered = new List<Enemy>();
         StartCoroutine(magicEffect());
+        InvokeRepeating("DoDamage", 0, 1.0f);
     }
-
+    private void DoDamage()
+    {
+        foreach (var item in enemiesThatEntered)
+        {
+            if(!item.Dead) item.gotHit();
+        }
+    }
     private IEnumerator magicEffect()
     {
         yield return new WaitForSeconds(1.5f);

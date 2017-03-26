@@ -155,6 +155,7 @@
     <Compile Include="Assets\Code\Wave.cs" />
     <Compile Include="Assets\Code\WaveHandle.cs" />
     <Compile Include="Assets\Code\WizzardBeardSphere.cs" />
+    <Compile Include="Assets\Export\torch\scripts\Torchelight.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\100 Best Effect Pack\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
@@ -234,6 +235,7 @@
     <None Include="Assets\100 Best Effect Pack\Standard Assets\Effects\ToonShading\Shaders\ToonLit.shader" />
     <None Include="Assets\100 Best Effect Pack\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
     <None Include="Assets\Export\readme.txt" />
+    <None Include="Assets\Export\torch\readme.txt" />
     <None Include="Assets\Hand painted bottle\readme.txt" />
     <None Include="Assets\Sprites\UI-Grayscale.shader" />
   </ItemGroup>

@@ -51,6 +51,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e540ca57d7fc8449aa261781efb8a48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayButtonSound: {fileID: 0}
-  CollisionSound: {fileID: 0}
   MainMixer: {fileID: 24100000, guid: ca26178e21af0cb4fb98eb808527eff5, type: 2}
+  PlayButtonSound: {fileID: 114509481358932018, guid: 8ebee88b487e2dd47855df5869ae90dc,
+    type: 2}
+  CollisionSound: {fileID: 114923603074157324, guid: 9480a91613f2b3945b2a062303661c6f,
+    type: 2}
+  BeardInAirSound: {fileID: 114623616075610160, guid: 2240b1d02dcbb2249900af146f84822f,
+    type: 2}
+  MenuMusic: {fileID: 114938091720002730, guid: 39412f7532196754ca4181bb74ae7bb7,
+    type: 2}
+  GameMusic: {fileID: 114610588459906890, guid: c93971e26e635184a886293e3d747dc5,
+    type: 2}
+  BeardReturnSound: {fileID: 114789739502183542, guid: c9752867700712843b7d26888428cd21,
+    type: 2}
+  HealSpellSound: {fileID: 114418136483830436, guid: 3864273b02d25ed41bd9719ef4abb216,
+    type: 2}
+  LoseScreenSound: {fileID: 114368265270379596, guid: a74da6c80ad0b134bb76eab683ebf810,
+    type: 2}
+  MenubuttonClickSound: {fileID: 114311157667129018, guid: 233b89e5448219e4fbbbdcb0ca9009cb,
+    type: 2}
+  OilSpellSound: {fileID: 114670983239662042, guid: ac8698d2045d6da4385efefeae4e7d3c,
+    type: 2}
+  PewPewSound: {fileID: 114162113382133800, guid: c3c4d62c1c4cda5459abd8f0192e5c5f,
+    type: 2}
+  PickUpSound: {fileID: 114042898843909352, guid: 92117dcff214b4346a0e825994b74470,
+    type: 2}
+  SpellImpactSound: {fileID: 114923603074157324, guid: 9480a91613f2b3945b2a062303661c6f,
+    type: 2}
+  WallSpellSound: {fileID: 114171890844619406, guid: f01e5d96020f92c41a31cd26d4074a19,
+    type: 2}

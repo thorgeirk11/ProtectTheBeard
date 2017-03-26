@@ -54,7 +54,8 @@ public class BeardController : MonoBehaviour
                 howMany--;
             }
         }
-        if (howMany > 0) Dead = true;
+        print(howMany);
+        if (howMany > 0) GameController.GameOver = true;
         return stolen;
     }
 

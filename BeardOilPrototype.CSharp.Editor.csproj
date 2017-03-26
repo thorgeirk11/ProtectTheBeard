@@ -251,6 +251,7 @@
     <None Include="Assets\100 Best Effect Pack\Standard Assets\Effects\ToonShading\Shaders\ToonLit.shader" />
     <None Include="Assets\100 Best Effect Pack\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
     <None Include="Assets\Export\readme.txt" />
+    <None Include="Assets\Export\torch\readme.txt" />
     <None Include="Assets\Hand painted bottle\readme.txt" />
     <None Include="Assets\Sprites\UI-Grayscale.shader" />
   </ItemGroup>

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Spawner : MonoBehaviour
 {
@@ -42,18 +43,12 @@ public class Spawner : MonoBehaviour
     private void SpawnObject()
     {
         EnemyData enemyData = enemyList[0];
-        switch (enemyData.type)
-        {
-            case 1:
-                GameObject tmp = Resources.Load("Prefabs/Bearded Enemy") as GameObject;
-                enemyToSpawn = tmp.GetComponent<Enemy>();
-                break;
-            default:
-                break;
-        }
+        GameObject tmp = Resources.Load("Prefabs/Bearded Enemy") as GameObject;
+        enemyToSpawn = tmp.GetComponent<Enemy>();
         currentSpawns++;
         var enemy = Instantiate(enemyToSpawn);
         enemy.transform.position = this.transform.position;
+        enemy.GetComponent<NavMeshAgent>().enabled = true;
         enemyList.RemoveAt(0);
         enemy.Setup(enemyData);
         var color = enemy.GetComponentInChildren<Renderer>().material.color;
@@ -78,7 +73,7 @@ public class Spawner : MonoBehaviour
     {
         currentSpawns = 0;
         maxSpawns = enemyList.Count;
-        spawnRate = Random.Range(0.5f, 2f);
+        spawnRate = Random.Range(0.5f, 1.5f);
     }
     public bool amDone()
     {

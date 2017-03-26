@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour {
+public class Bullet : MonoBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         var plane = new Plane(Vector3.up, -0.5f);
 
         float dist;
@@ -19,7 +21,7 @@ public class Bullet : MonoBehaviour {
         }
         Destroy(this.gameObject, 2);
     }
-	
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.name == "Capsule")
@@ -28,11 +30,17 @@ public class Bullet : MonoBehaviour {
             enm.gotHit();
             SoundManager.Instance.PlaySpellImpactSound();
             Destroy(this.gameObject);
+            return;
         }
-        /*if(other.name == "Cube")
+        if (other.name == "Player" || other.name == "OilObject(Clone)")
         {
-            Destroy(other.gameObject.transform.parent.gameObject);
-            Destroy(this.gameObject);
-        }*/
+            return;
+        }
+        if (other.name.Length > 6 && other.name.Substring(0, 6) == "Sphere")
+        {
+            return;
+        }
+
+        Destroy(this.gameObject);
     }
 }

@@ -48,6 +48,7 @@ public class GameController : MonoBehaviour
     {
         while (true)
         {
+            if (GameOver) SceneManager.LoadScene(2);
             yield return new WaitForSeconds(1f);
             bool check = true;
             foreach (var item in spawners)
@@ -59,6 +60,7 @@ public class GameController : MonoBehaviour
             {
                 while (FindObjectsOfType<Enemy>().Any(x => !x.RunningAway))
                 {
+                    if (GameOver) SceneManager.LoadScene(2);
                     yield return new WaitForSeconds(1f);
                 }
                 SpawnWave();

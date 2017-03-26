@@ -11,15 +11,14 @@ public class Enemy : Entity
     public int HP { get; private set; }
     public bool ReachedEnterance { get; private set; }
     public bool HasGottenAway { get; private set; }
+    public bool Dead { get; private set; }
     public bool RunningAway { get; private set; }
     public int MaxHP { get; private set; }
 
-    public float MoveSpeed;
-    //public Slider healthBar;
+    public float MoveSpeed { get; private set; }
 
     private Transform capsule;
     private NavMeshAgent agent;
-    private int beardBalls;
     private Transform beard;
     private List<Transform> beardparts;
     private string path;
@@ -30,7 +29,6 @@ public class Enemy : Entity
     {
         wizzardStolenBeard = new List<WizzardBeardSphere>();
         agent = GetComponent<NavMeshAgent>();
-        beardBalls = 0;
         beardparts = new List<Transform>();
         foreach (Transform item in transform)
         {
@@ -97,9 +95,8 @@ public class Enemy : Entity
     private IEnumerable<Transform> OpenSphereSlots()
     {
         return from b in beardparts.Skip(MaxHP - HP).Take(HP)
-               from c in b.transform.Cast<Transform>()
-               where c.GetComponentInChildren<WizzardBeardSphere>() == null
-               select c;
+               where b.GetComponentInChildren<WizzardBeardSphere>() == null
+               select b;
     }
 
     public int HowManyBeardSpheresToSteel()
@@ -122,7 +119,6 @@ public class Enemy : Entity
         foreach (var part in stolenBeard)
         {
             PlaceStolenBeard(part, enemyBeard[i]);
-            enemyBeard[i].parent.gameObject.SetActive(true);
             i++;
         }
     }
@@ -130,6 +126,7 @@ public class Enemy : Entity
     private void PlaceStolenBeard(WizzardBeardSphere stolen, Transform enemyPart)
     {
         enemyPart.GetComponent<Renderer>().enabled = false;
+        enemyPart.gameObject.SetActive(true);
         stolen.transform.SetParent(enemyPart);
         stolen.EnemyPickingUp();
         wizzardStolenBeard.Add(stolen);
@@ -157,7 +154,7 @@ public class Enemy : Entity
                                     .Where(i => i.HasBeenPickedUp && !i.IsOnEnemy);
         if (wizzardBeardParts.Any())
         {
-            target = GetCloest(wizzardBeardParts.Select(i => i.transform));
+            target = GetCloest(new[] { target }.Union(wizzardBeardParts.Select(i => i.transform)));
         }
         else if (!ReachedEnterance)
         {
@@ -170,11 +167,9 @@ public class Enemy : Entity
     {
         HP = enemy.hp;
         MaxHP = enemy.hp;
-        //healthBar.maxValue = HP;
-        //healthBar.value = HP;
         path = "baddy";
-        path += enemy.hp.ToString();
-        float scaling = enemy.hp * 0.1f;
+        path += enemy.type.ToString();
+        float scaling = enemy.type * 0.1f;
         gameObject.transform.localScale += new Vector3(scaling, scaling, scaling);
         Material mat = Resources.Load("BaddySprites/Materials/" + path) as Material;
         Transform ix = this.gameObject.transform.GetChild(0);
@@ -184,16 +179,14 @@ public class Enemy : Entity
     {
         foreach (Transform part in beardparts)
         {
-            var stolenParts = part.GetComponentsInChildren<WizzardBeardSphere>();
-            if (stolenParts.Length > 0)
+            var stolen = part.GetComponentInChildren<WizzardBeardSphere>();
+            if (stolen != null)
             {
-                foreach (var stolen in stolenParts)
-                {
-                    wizzardStolenBeard.Remove(stolen);
-                    stolen.EnemyDroped();
-                    stolen.transform.parent.GetComponent<Renderer>().enabled = true;
-                    stolen.transform.SetParent(null);
-                }
+                wizzardStolenBeard.Remove(stolen);
+                iTween.Stop(stolen.gameObject);
+                stolen.EnemyDroped();
+                stolen.transform.parent.GetComponent<Renderer>().enabled = true;
+                stolen.transform.SetParent(null);
                 return;
             }
             if (!part.gameObject.activeInHierarchy)
@@ -207,6 +200,7 @@ public class Enemy : Entity
     {
         HP--;
         AddBeard();
+
         //healthBar.value = HP;
         if (HP <= 0)
         {
@@ -214,6 +208,7 @@ public class Enemy : Entity
             Transform ix = this.gameObject.transform.GetChild(0);
             ix.gameObject.GetComponent<Renderer>().material = mat;
             capsule.gameObject.GetComponent<Collider>().enabled = wizzardStolenBeard.Any();
+            Dead = true;
         }
     }
     public void restoreSpeed()

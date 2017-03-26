@@ -41,6 +41,7 @@ public class WizzardBeardSphere : MonoBehaviour
         if (HasBeenPickedUp && !IsOnEnemy &&
             entering.tag == "Player")
         {
+            light.enabled = false;
             BeardController.instance.RestoreBeard(this);
             HasBeenPickedUp = false;
         }

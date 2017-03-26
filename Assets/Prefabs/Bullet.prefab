@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114004844208460974}
   - component: {fileID: 54465179866580344}
   - component: {fileID: 75616884459911526}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,6 +75,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!33 &33540752928737206
 MeshFilter:
