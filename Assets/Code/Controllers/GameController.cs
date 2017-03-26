@@ -22,7 +22,7 @@ public class GameController : MonoBehaviour
     private int waveNr;
     private WaveHandle allWaves;
     private int maxWaves;
-    private LifeUI lifes;
+    //private LifeUI lifes;
     
     // Use this for initialization
     void Awake()

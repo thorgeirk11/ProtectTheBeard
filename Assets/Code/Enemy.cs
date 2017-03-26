@@ -92,13 +92,18 @@ public class Enemy : Entity
         //capsule.gameObject.GetComponent<Collider>().enabled = false;
     }
 
+
+    private IEnumerable<Transform> OpenSphereSlots()
+    {
+        return from b in beardparts.Skip(MaxHP - HP).Take(HP)
+               from c in b.transform.Cast<Transform>()
+               where c.GetComponentInChildren<WizzardBeardSphere>() == null
+               select c;
+    }
+
     public int HowManyBeardSpheresToSteel()
     {
-        return (from b in beardparts.Take(MaxHP)
-                where !b.gameObject.activeInHierarchy
-                from c in b.transform.Cast<Transform>()
-                where c.GetComponentInChildren<WizzardBeardSphere>() == null
-                select c).Count();
+        return OpenSphereSlots().Count();
     }
 
     private void StealWizzardsBeard(Transform target)
@@ -112,25 +117,22 @@ public class Enemy : Entity
     private void PlaceStolenBeard(List<WizzardBeardSphere> stolenBeard)
     {
         var i = 0;
-        var enemyBeard = beardparts
-                            .Where(b => !b.gameObject.activeInHierarchy)
-                            .SelectMany(b => b.transform.Cast<Transform>());
-        foreach (var part in enemyBeard)
+        var enemyBeard = OpenSphereSlots().ToList();
+        foreach (var part in stolenBeard)
         {
-            PlaceStolenBeard(stolenBeard[i], part);
-            part.parent.gameObject.SetActive(true);
+            PlaceStolenBeard(part, enemyBeard[i]);
+            enemyBeard[i].parent.gameObject.SetActive(true);
             i++;
         }
     }
 
-    private void PlaceStolenBeard(WizzardBeardSphere beardPart, Transform part)
+    private void PlaceStolenBeard(WizzardBeardSphere stolen, Transform enemyPart)
     {
-        part.GetComponent<Renderer>().enabled = false;
-        beardPart.transform.SetParent(part);
-        beardPart.HasBeenPickedUp = true;
-        beardPart.IsOnEnemy = true;
-        wizzardStolenBeard.Add(beardPart);
-        iTween.MoveTo(beardPart.gameObject, iTween.Hash("position", Vector3.zero, "islocal", true, "time", 1));
+        enemyPart.GetComponent<Renderer>().enabled = false;
+        stolen.transform.SetParent(enemyPart);
+        stolen.EnemyPickingUp();
+        wizzardStolenBeard.Add(stolen);
+        iTween.MoveTo(stolen.gameObject, iTween.Hash("position", Vector3.zero, "islocal", true, "time", 1));
     }
 
     private void PickupWizzardsBeard(WizzardBeardSphere target)
@@ -143,7 +145,6 @@ public class Enemy : Entity
 
     private Transform SelectTarget()
     {
-        print(HowManyBeardSpheresToSteel());
         if (HP <= 0 || HowManyBeardSpheresToSteel() == 0)
             return GameController.Instance.RunAwayTarget;
 
@@ -170,7 +171,7 @@ public class Enemy : Entity
         path = "baddy";
         path += enemy.hp.ToString();
         float scaling = enemy.hp * 0.1f;
-        gameObject.transform.localScale += new Vector3(scaling,scaling,scaling);
+        gameObject.transform.localScale += new Vector3(scaling, scaling, scaling);
         Material mat = Resources.Load("BaddySprites/Materials/" + path) as Material;
         Transform ix = this.gameObject.transform.GetChild(0);
         ix.gameObject.GetComponent<Renderer>().material = mat;
@@ -184,7 +185,8 @@ public class Enemy : Entity
             {
                 foreach (var stolen in stolenParts)
                 {
-                    stolen.IsOnEnemy = false;
+                    wizzardStolenBeard.Remove(stolen);
+                    stolen.EnemyDroped();
                     stolen.transform.parent.GetComponent<Renderer>().enabled = true;
                     stolen.transform.SetParent(null);
                 }
@@ -206,7 +208,6 @@ public class Enemy : Entity
         {
             Material mat = Resources.Load("BaddySprites/Materials/" + path + "_happy") as Material;
             Transform ix = this.gameObject.transform.GetChild(0);
-            print(ix);
             ix.gameObject.GetComponent<Renderer>().material = mat;
             capsule.gameObject.GetComponent<Collider>().enabled = wizzardStolenBeard.Any();
         }
