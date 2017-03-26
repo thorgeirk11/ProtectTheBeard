@@ -29,11 +29,19 @@ public class BeardController : MonoBehaviour
 
     internal void RestoreBeard(WizzardBeardSphere wizzardBeardSphere)
     {
+        StartCoroutine(soundsOfRestore());
         wizzardBeardSphere.transform.SetParent(beardObj.transform);
         var position = defaultLocations[wizzardBeardSphere.transform];
         iTween.MoveTo(wizzardBeardSphere.gameObject, position, 2f);
     }
-
+    private IEnumerator soundsOfRestore()
+    {
+        SoundManager.Instance.PlayPickUpSound();
+        yield return new WaitForSeconds(0.2f);
+        SoundManager.Instance.PlayBeardInAirSound();
+        yield return new WaitForSeconds(1.2f);
+        SoundManager.Instance.PlayBeardReturnSoundc();
+    }
     public List<WizzardBeardSphere> StealWizzardsBeard(int howMany)
     {
         var stolen = new List<WizzardBeardSphere>();

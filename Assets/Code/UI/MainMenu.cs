@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        SoundManager.Instance.PlayMenuMusic();
     }
 
     public void PlayPressed()

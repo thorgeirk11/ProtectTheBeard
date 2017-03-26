@@ -11,6 +11,7 @@ public class Enemy : Entity
     public int HP { get; private set; }
     public bool ReachedEnterance { get; private set; }
     public bool HasGottenAway { get; private set; }
+    public bool RunningAway { get; private set; }
     public int MaxHP { get; private set; }
 
     public float MoveSpeed;
@@ -87,7 +88,7 @@ public class Enemy : Entity
 
     private void GotAway()
     {
-        //HasGottenAway = true;
+        HasGottenAway = true;
         gameObject.SetActive(false);
         //capsule.gameObject.GetComponent<Collider>().enabled = false;
     }
@@ -146,7 +147,10 @@ public class Enemy : Entity
     private Transform SelectTarget()
     {
         if (HP <= 0 || HowManyBeardSpheresToSteel() == 0)
+        {
+            RunningAway = true;
             return GameController.Instance.RunAwayTarget;
+        }
 
         var target = GameController.Instance.WizzardTransform;
         var wizzardBeardParts = BeardController.instance.WizzardBeard

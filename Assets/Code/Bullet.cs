@@ -26,6 +26,7 @@ public class Bullet : MonoBehaviour {
         {
             Enemy enm = other.gameObject.transform.parent.GetComponent<Enemy>();
             enm.gotHit();
+            SoundManager.Instance.PlaySpellImpactSound();
             Destroy(this.gameObject);
         }
         /*if(other.name == "Cube")

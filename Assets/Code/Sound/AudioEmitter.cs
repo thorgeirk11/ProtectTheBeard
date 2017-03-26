@@ -8,6 +8,7 @@ public class AudioEmitter : MonoBehaviour
     AudioClip[] Clips;
     [SerializeField]
     bool DoNotDestroy;
+    public bool loop;
 
     public void Start()
     {
@@ -23,6 +24,7 @@ public class AudioEmitter : MonoBehaviour
         var source = GetComponent<AudioSource>();
         source.clip = Clips[index];
         source.Play();
-        Destroy(gameObject, Clips[index].length);
+        source.loop = loop;
+        if(!loop)Destroy(gameObject, Clips[index].length);
     }
 }

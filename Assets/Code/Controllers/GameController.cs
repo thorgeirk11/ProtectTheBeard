@@ -39,6 +39,7 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        //SoundManager.Instance.PlayGameMusic();
         StartCoroutine(CheckForWaveDone());
     }
 
@@ -56,7 +57,7 @@ public class GameController : MonoBehaviour
             }
             if (check)
             {
-                while (FindObjectsOfType<Enemy>().Any())
+                while (FindObjectsOfType<Enemy>().Any(x => !x.RunningAway))
                 {
                     yield return new WaitForSeconds(1f);
                 }

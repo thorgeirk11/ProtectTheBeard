@@ -138,6 +138,7 @@
     <Compile Include="Assets\Code\FaceCamera.cs" />
     <Compile Include="Assets\Code\Follow.cs" />
     <Compile Include="Assets\Code\FollowCamera.cs" />
+    <Compile Include="Assets\Code\GameOverMusicScript.cs" />
     <Compile Include="Assets\Code\LifeUI.cs" />
     <Compile Include="Assets\Code\Obstacle.cs" />
     <Compile Include="Assets\Code\OilMagic.cs" />
@@ -232,6 +233,7 @@
     <None Include="Assets\100 Best Effect Pack\Standard Assets\Effects\ToonShading\Shaders\ToonBasicOutline.shader" />
     <None Include="Assets\100 Best Effect Pack\Standard Assets\Effects\ToonShading\Shaders\ToonLit.shader" />
     <None Include="Assets\100 Best Effect Pack\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
+    <None Include="Assets\Export\readme.txt" />
     <None Include="Assets\Hand painted bottle\readme.txt" />
     <None Include="Assets\Sprites\UI-Grayscale.shader" />
   </ItemGroup>

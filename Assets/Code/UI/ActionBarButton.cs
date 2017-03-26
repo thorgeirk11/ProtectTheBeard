@@ -23,6 +23,8 @@ public class ActionBarButton : MonoBehaviour
 
     public void Setup(int cost, Sprite icon)
     {
+        if (!gameObject.activeInHierarchy)
+            return;
         Cost = cost;
         CostText.text = cost.ToString();
         IconLoading.sprite = icon;

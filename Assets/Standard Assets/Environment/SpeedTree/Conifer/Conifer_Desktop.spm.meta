@@ -24,7 +24,7 @@ SpeedTreeImporter:
     enableBump: 1
     enableHue: 1
     windQuality: 4
-  - height: 0.01
+  - height: 0.18840885
     castShadows: 1
     receiveShadows: 1
     useLightProbes: 1

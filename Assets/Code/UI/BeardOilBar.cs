@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class BeardOilBar : MonoBehaviour
 {
+    public Text AmountText;
     public int StartValue;
 
     private float FillRate;
@@ -13,7 +14,6 @@ public class BeardOilBar : MonoBehaviour
     private Slider OilBar;
     [SerializeField]
     private Slider OverlayBar;
-    private Text AmountText;
 
     public static float OilAmount { get; private set; }
 
@@ -27,7 +27,6 @@ public class BeardOilBar : MonoBehaviour
     void Start()
     {
         FillRate = GameController.Instance.OilBarFillRate;
-        AmountText = GetComponentInChildren<Text>();
 
         OilBar.value = StartValue;
         OverlayBar.value = StartValue;

@@ -51,6 +51,7 @@ class ActionCotroller : MonoBehaviour
 
     public void CastOilSpill()
     {
+        SoundManager.Instance.PlayOilSpellSound();
         Plane plane = new Plane(Vector3.up, -0.5f);
         float dist;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -62,19 +63,21 @@ class ActionCotroller : MonoBehaviour
     }
     public void CastGrowBeard()
     {
+        SoundManager.Instance.PlayPewPewSound();
         var pos = player.transform.position;
         Instantiate(bulletPrefab, pos, player.transform.rotation);
     }
 
     public void CastObstacle()
     {
+        SoundManager.Instance.PlayWallSpellSound();
         Plane plane = new Plane(Vector3.up, -0.5f);
         float dist;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (plane.Raycast(ray, out dist))
         {
             Vector3 point = ray.GetPoint(dist);
-            Instantiate(obstaclePrefab, point, player.transform.rotation);
+            Instantiate(obstaclePrefab, point, Quaternion.identity);
         }
     }
 

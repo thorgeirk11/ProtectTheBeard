@@ -42,14 +42,17 @@ public class PlayerController : Entity
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 Actions.PerformAction(ActionKey.LeftMouse);
+
             }
             if (Input.GetKeyDown(KeyCode.Mouse1))
             {
                 Actions.PerformAction(ActionKey.RightMouse);
+                
             }
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 Actions.PerformAction(ActionKey.Q);
+                
             }
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {

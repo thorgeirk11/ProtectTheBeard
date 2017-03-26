@@ -4915,11 +4915,21 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1785499735}
     - target: {fileID: 114405096298488642, guid: aba079bb1be5efe4cb1acfcceacfddd8,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
+      objectReference: {fileID: 1785499735}
+    - target: {fileID: 114905462495814080, guid: aba079bb1be5efe4cb1acfcceacfddd8,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: UnmuteSounds
+      objectReference: {fileID: 0}
+    - target: {fileID: 114405096298488642, guid: aba079bb1be5efe4cb1acfcceacfddd8,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: MuteSounds
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: aba079bb1be5efe4cb1acfcceacfddd8, type: 2}
@@ -6612,6 +6622,90 @@ Prefab:
       value: 
       objectReference: {fileID: 114509481358932018, guid: 8ebee88b487e2dd47855df5869ae90dc,
         type: 2}
+    - target: {fileID: 114462401189651826, guid: 43e12d466ad09b94f858b53e34c04773,
+        type: 2}
+      propertyPath: MenubuttonClickSound
+      value: 
+      objectReference: {fileID: 114311157667129018, guid: 233b89e5448219e4fbbbdcb0ca9009cb,
+        type: 2}
+    - target: {fileID: 114462401189651826, guid: 43e12d466ad09b94f858b53e34c04773,
+        type: 2}
+      propertyPath: MenuMusic
+      value: 
+      objectReference: {fileID: 114938091720002730, guid: 39412f7532196754ca4181bb74ae7bb7,
+        type: 2}
+    - target: {fileID: 114462401189651826, guid: 43e12d466ad09b94f858b53e34c04773,
+        type: 2}
+      propertyPath: OilSpellSound
+      value: 
+      objectReference: {fileID: 114670983239662042, guid: ac8698d2045d6da4385efefeae4e7d3c,
+        type: 2}
+    - target: {fileID: 114462401189651826, guid: 43e12d466ad09b94f858b53e34c04773,
+        type: 2}
+      propertyPath: PewPewSound
+      value: 
+      objectReference: {fileID: 114162113382133800, guid: c3c4d62c1c4cda5459abd8f0192e5c5f,
+        type: 2}
+    - target: {fileID: 114462401189651826, guid: 43e12d466ad09b94f858b53e34c04773,
+        type: 2}
+      propertyPath: PickUpSound
+      value: 
+      objectReference: {fileID: 114042898843909352, guid: 92117dcff214b4346a0e825994b74470,
+        type: 2}
+    - target: {fileID: 114462401189651826, guid: 43e12d466ad09b94f858b53e34c04773,
+        type: 2}
+      propertyPath: SpellImpactSound
+      value: 
+      objectReference: {fileID: 114923603074157324, guid: 9480a91613f2b3945b2a062303661c6f,
+        type: 2}
+    - target: {fileID: 114462401189651826, guid: 43e12d466ad09b94f858b53e34c04773,
+        type: 2}
+      propertyPath: WallSpell
+      value: 
+      objectReference: {fileID: 114171890844619406, guid: f01e5d96020f92c41a31cd26d4074a19,
+        type: 2}
+    - target: {fileID: 114462401189651826, guid: 43e12d466ad09b94f858b53e34c04773,
+        type: 2}
+      propertyPath: LoseScreenSound
+      value: 
+      objectReference: {fileID: 114368265270379596, guid: a74da6c80ad0b134bb76eab683ebf810,
+        type: 2}
+    - target: {fileID: 114462401189651826, guid: 43e12d466ad09b94f858b53e34c04773,
+        type: 2}
+      propertyPath: HealSpellSound
+      value: 
+      objectReference: {fileID: 114418136483830436, guid: 3864273b02d25ed41bd9719ef4abb216,
+        type: 2}
+    - target: {fileID: 114462401189651826, guid: 43e12d466ad09b94f858b53e34c04773,
+        type: 2}
+      propertyPath: GameMusic
+      value: 
+      objectReference: {fileID: 114610588459906890, guid: c93971e26e635184a886293e3d747dc5,
+        type: 2}
+    - target: {fileID: 114462401189651826, guid: 43e12d466ad09b94f858b53e34c04773,
+        type: 2}
+      propertyPath: BeardReturnSound
+      value: 
+      objectReference: {fileID: 114789739502183542, guid: c9752867700712843b7d26888428cd21,
+        type: 2}
+    - target: {fileID: 114462401189651826, guid: 43e12d466ad09b94f858b53e34c04773,
+        type: 2}
+      propertyPath: BeardInAirSound
+      value: 
+      objectReference: {fileID: 114623616075610160, guid: 2240b1d02dcbb2249900af146f84822f,
+        type: 2}
+    - target: {fileID: 114462401189651826, guid: 43e12d466ad09b94f858b53e34c04773,
+        type: 2}
+      propertyPath: CollisionSound
+      value: 
+      objectReference: {fileID: 114923603074157324, guid: 9480a91613f2b3945b2a062303661c6f,
+        type: 2}
+    - target: {fileID: 114462401189651826, guid: 43e12d466ad09b94f858b53e34c04773,
+        type: 2}
+      propertyPath: WallSpellSound
+      value: 
+      objectReference: {fileID: 114171890844619406, guid: f01e5d96020f92c41a31cd26d4074a19,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 43e12d466ad09b94f858b53e34c04773, type: 2}
   m_IsPrefabParent: 0
@@ -7122,6 +7216,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1785499735}
+        m_MethodName: PlayMenuButtonClickSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 1
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1073325623
@@ -8898,6 +9003,16 @@ Prefab:
         type: 2}
       propertyPath: m_Text
       value: Left Mouse button
+      objectReference: {fileID: 0}
+    - target: {fileID: 114088955741301404, guid: dd8c889be0a11954cb4154cb82b8ce9c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1785499735}
+    - target: {fileID: 114088955741301404, guid: dd8c889be0a11954cb4154cb82b8ce9c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayMenuButtonClickSound
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd8c889be0a11954cb4154cb82b8ce9c, type: 2}
